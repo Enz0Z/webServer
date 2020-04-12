@@ -11,7 +11,7 @@ public class Core extends Thread {
 	
 	private File _rootDir;
 	private ServerSocket _serverSocket;
-	private static String _version = "0.1";
+	private static String _version = "0.2";
 	private boolean _running = true;
 	public static final Map<String, String> MIME_TYPES = new HashMap<String, String>();
 
@@ -30,7 +30,7 @@ public class Core extends Thread {
 
 	public static void main(String[] args) {
 		try {
-			new Core(new File("./www/"), 8080);
+			new Core(new File("./www/"), 80);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -44,7 +44,7 @@ public class Core extends Thread {
 		}
 		_serverSocket = new ServerSocket(port);
 		start();
-		System.out.print("webServer >> " + "Started and running on port 8080.\n");
+		System.out.print("webServer >> " + "Started and running on port 80.\n");
 	}
 
 	@Override
