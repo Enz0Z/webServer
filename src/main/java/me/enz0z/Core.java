@@ -36,11 +36,11 @@ public class Core extends Thread {
 		}
 	}
 	
-	public Core(File _rootDir, Integer port) throws IOException {
-		_rootDir = _rootDir.getCanonicalFile();
+	public Core(File dir, Integer port) throws IOException {
+		_rootDir = dir.getCanonicalFile();
 
-		if (!_rootDir.isDirectory()) {
-			_rootDir.mkdir();
+		if (!dir.isDirectory()) {
+			dir.mkdir();
 		}
 		_serverSocket = new ServerSocket(port);
 
