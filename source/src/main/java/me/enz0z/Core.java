@@ -11,7 +11,6 @@ public class Core extends Thread {
 	
 	private File _rootDir;
 	private ServerSocket _serverSocket;
-	private static String _version = "0.2";
 	private boolean _running = true;
 	public static final Map<String, String> MIME_TYPES = new HashMap<String, String>();
 
@@ -59,9 +58,5 @@ public class Core extends Thread {
 				System.exit(1);
 			}
 		}
-	}
-
-	public static String getVersion() {
-		return "v" + _version;
 	}
 }

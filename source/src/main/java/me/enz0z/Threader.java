@@ -67,7 +67,7 @@ public class Threader extends Thread {
 					
 					out.write(("<a href=\"" + path + filename + "\">" + path + filename + "</a><br>\n").getBytes());
 				}
-				out.write(("</p><hr><p>webServer | " + Core.getVersion() + "</p></body><html>").getBytes());
+				out.write(("</p><hr><p>webServer</p></body><html>").getBytes());
 			} else {
 				reader = new BufferedInputStream(new FileInputStream(file));
 				String contentType = Core.MIME_TYPES.get(getExtension(file));
