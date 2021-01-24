@@ -8,42 +8,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Core extends Thread {
-	
+
+	public static final Map<String, String> MIME_TYPES = new HashMap<String, String>();
+	private boolean _running = true;
 	private File _rootDir;
 	private ServerSocket _serverSocket;
-	private boolean _running = true;
-	public static final Map<String, String> MIME_TYPES = new HashMap<String, String>();
 
 	static {
-		String image = "image/";
-		MIME_TYPES.put(".gif", image + "gif");
-		MIME_TYPES.put(".jpg", image + "jpeg");
-		MIME_TYPES.put(".jpeg", image + "jpeg");
-		MIME_TYPES.put(".png", image + "png");
-
-		String text = "text/";
-		MIME_TYPES.put(".html", text + "html");
-		MIME_TYPES.put(".htm", text + "html");
-		MIME_TYPES.put(".txt", text + "plain");
+		MIME_TYPES.put(".gif", "image/" + "gif");
+		MIME_TYPES.put(".jpg", "image/" + "jpeg");
+		MIME_TYPES.put(".jpeg", "image/" + "jpeg");
+		MIME_TYPES.put(".png", "image/" + "png");
+		MIME_TYPES.put(".html", "text/" + "html");
+		MIME_TYPES.put(".htm", "text/" + "html");
+		MIME_TYPES.put(".txt", "text/" + "plain");
 	}
 
 	public static void main(String[] args) {
 		try {
-			new Core(new File("./www/"), 80);
+			if (args.length > 1) {
+				new Core(new File("./www/"), Integer.parseInt(args[1]));
+			} else {
+				new Core(new File("./www/"), 80);
+			}
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 	
 	public Core(File _rootDir, Integer port) throws IOException {
-		this._rootDir = _rootDir.getCanonicalFile();
+		_rootDir = _rootDir.getCanonicalFile();
 
-		if (!this._rootDir.isDirectory()) {
+		if (!_rootDir.isDirectory()) {
 			_rootDir.mkdir();
 		}
 		_serverSocket = new ServerSocket(port);
+
 		start();
-		System.out.print("webServer >> " + "Started and running on port 80.\n");
+		System.out.print("webServer >> " + "Running on port " + port + ".\n");
 	}
 
 	@Override
@@ -52,9 +54,10 @@ public class Core extends Thread {
 			try {
 				Socket socket = _serverSocket.accept();
 				Threader requestThread = new Threader(socket, _rootDir);
-				
+
 				requestThread.start();
 			} catch (Exception e) {
+				e.printStackTrace();
 				System.exit(1);
 			}
 		}
